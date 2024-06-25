@@ -1,4 +1,3 @@
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
 class AppMaterialPage extends StatefulWidget{
@@ -10,7 +9,8 @@ class AppMaterialPage extends StatefulWidget{
 
 class _AppMaterialPageState extends State<AppMaterialPage>{
 
-
+  double result=0;
+  final TextEditingController textEditingController= TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -23,6 +23,11 @@ class _AppMaterialPageState extends State<AppMaterialPage>{
         ),
         borderRadius: BorderRadius.all(Radius.circular(20))
     );
+
+    void convert(){
+      result = double.parse(textEditingController.text) * 83.44;
+      setState(() {});
+    }
 
     return  Scaffold(
       backgroundColor: Colors.grey,
@@ -38,46 +43,41 @@ class _AppMaterialPageState extends State<AppMaterialPage>{
         centerTitle: true,
       ),
       body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            const Text(
-              '0',
-              style: TextStyle(
-                  fontSize: 50,
-                  fontWeight: FontWeight.w800,
-                  color: Colors.black
+        child: Padding(
+          padding: const EdgeInsets.all(10.0),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+               Text(
+                result!=0 ? result.toStringAsFixed(3) : result.toStringAsFixed(0),  // it means if result!=0 then show 3 digit after decimal but if result is 0 then show 0
+                style: const TextStyle(
+                    fontSize: 50,
+                    fontWeight: FontWeight.w800,
+                    color: Colors.black
+                ),
               ),
-            ),
-            const Padding(
-              padding: EdgeInsets.all(10.0),
-              child: TextField(
-                  style: TextStyle(
-                      color: Colors.black
-                  ),
-                  decoration: InputDecoration(
-                      hintText: 'Please enter amount in USD',
-                      hintStyle: TextStyle(
-                          color: Colors.black
-                      ),
-                      prefixIcon: Icon(Icons.monetization_on_outlined),
-                      prefixIconColor: Colors.black,
-                      filled: true,
-                      fillColor: Colors.white,
-                      focusedBorder: borderDesign,   // focused border things act on we click on the text field
-                      enabledBorder: borderDesign   // if we want to look TextField same when it is focused or not we have to set enabledBorder
-                  ),
-                  keyboardType: TextInputType.number
-              ),
-            ),
-            Padding(
-              padding: const EdgeInsets.all(10.0),
-              child: TextButton(
-                onPressed: (){
-                  if (kDebugMode) {   // it means that if we are in debug mode then print only. Also we can use debugPrint('Button pressed') instead of this
-                    print('Button pressed ');
-                  }
-                },
+               TextField(
+                   controller: textEditingController,
+                   style: const TextStyle(
+                       color: Colors.black
+                   ),
+                   decoration: const InputDecoration(
+                       hintText: 'Please enter amount in USD',
+                       hintStyle: TextStyle(
+                           color: Colors.black
+                       ),
+                       prefixIcon: Icon(Icons.monetization_on_outlined),
+                       prefixIconColor: Colors.black,
+                       filled: true,
+                       fillColor: Colors.white,
+                       focusedBorder: borderDesign,   // focused border things act on we click on the text field
+                       enabledBorder: borderDesign   // if we want to look TextField same when it is focused or not we have to set enabledBorder
+                   ),
+                   keyboardType: TextInputType.number
+               ),
+              const SizedBox(height: 12,),
+              TextButton(
+                onPressed: convert,
                 // style:  const ButtonStyle(
                 //   backgroundColor: WidgetStatePropertyAll(Colors.black),
                 //   foregroundColor: WidgetStatePropertyAll(Colors.white),
@@ -100,8 +100,8 @@ class _AppMaterialPageState extends State<AppMaterialPage>{
                 ),
                 child: const Text('Convert'),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );
@@ -109,12 +109,3 @@ class _AppMaterialPageState extends State<AppMaterialPage>{
   }
 
 }
-
-
-// class AppMaterialPagee extends StatelessWidget{
-//   const AppMaterialPagee({super.key});
-//
-//   @override
-//   Widget build(BuildContext context) {
-//   }
-// }
